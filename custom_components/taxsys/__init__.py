@@ -11,7 +11,11 @@ from .api import TaxsysClient
 from .const import CONF_CLIENT_NUMBER, CONF_COMPANY
 from .coordinator import TaxsysConfigEntry, TaxsysCoordinator
 
-PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.SENSOR]
+PLATFORMS: list[Platform] = [
+    Platform.BINARY_SENSOR,
+    Platform.CALENDAR,
+    Platform.SENSOR,
+]
 
 
 def create_client(hass: HomeAssistant, data: dict) -> TaxsysClient:

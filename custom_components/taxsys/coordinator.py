@@ -105,14 +105,13 @@ class TaxsysCoordinator(DataUpdateCoordinator[TaxsysData]):
             ) from err
 
         now = dt_util.now()
-        today = now.astimezone(PORTAL_TZ).date()
         self.update_interval = next_interval(rides, now)
         _LOGGER.debug(
             "Fetched %d rides, next update in %s", len(rides), self.update_interval
         )
         return TaxsysData(
             rides=rides,
-            morning=next_ride(rides, PART_MORNING, today),
-            afternoon=next_ride(rides, PART_AFTERNOON, today),
+            morning=next_ride(rides, PART_MORNING, now),
+            afternoon=next_ride(rides, PART_AFTERNOON, now),
             updated=now,
         )

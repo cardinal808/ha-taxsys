@@ -56,6 +56,36 @@ async def test_entities(
     assert diag["entry"]["password"] == "**REDACTED**"
     assert diag["rides"][0]["driver"] == "**REDACTED**"
 
+    # The calendar lists every ride; the current one is the afternoon ride.
+    freezer.move_to("2026-11-09T13:30:00+01:00")
+    async_fire_time_changed(hass)
+    await hass.async_block_till_done()
+    cal = hass.states.get("calendar.taxsys_0000000_schedule")
+    assert cal.state == "off"
+    assert cal.attributes["message"] == "Taxi naar huis → Thuis (Gepland)"
+    assert (
+        cal.attributes["start_time"] == "2026-11-09 05:05:00"
+    )  # test HA runs in US/Pacific
+
+    result = await hass.services.async_call(
+        "calendar",
+        "get_events",
+        {
+            "entity_id": "calendar.taxsys_0000000_schedule",
+            "start_date_time": "2026-11-09T00:00:00+01:00",
+            "end_date_time": "2026-11-11T00:00:00+01:00",
+        },
+        blocking=True,
+        return_response=True,
+    )
+    events = result["calendar.taxsys_0000000_schedule"]["events"]
+    assert [e["summary"] for e in events] == [
+        "Taxi ophalen → De Zonnebloem (Gepland)",
+        "Taxi naar huis → Thuis (Gepland)",
+        "Taxi ophalen → De Zonnebloem (Gepland)",
+    ]
+    assert "Chauffeur: 1234 - JAN JANSEN" in events[0]["description"]
+
     assert await hass.config_entries.async_unload(config_entry.entry_id)
     assert config_entry.state is ConfigEntryState.NOT_LOADED
 

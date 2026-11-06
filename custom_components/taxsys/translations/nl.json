@@ -57,6 +57,11 @@
       "ride_window": {
         "name": "Rit venster"
       }
+    },
+    "calendar": {
+      "schedule": {
+        "name": "Planning"
+      }
     }
   },
   "exceptions": {

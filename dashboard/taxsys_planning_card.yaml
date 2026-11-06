@@ -1,0 +1,8 @@
+# Ingebouwde kalenderkaart met de ritten van deze en volgende week.
+# Vervang 0000000 door je klantnummer. In een Engelstalige Home Assistant
+# heet de entiteit calendar.taxsys_0000000_schedule.
+type: calendar
+title: Taxi planning
+initial_view: listWeek
+entities:
+  - calendar.taxsys_0000000_planning

@@ -7,10 +7,10 @@ from __future__ import annotations
 
 import re
 from dataclasses import asdict, dataclass
-from datetime import date, datetime
+from datetime import date, datetime, time, timedelta
 from html.parser import HTMLParser
 
-from .const import PART_AFTERNOON, PART_MORNING, PORTAL_TZ
+from .const import PART_AFTERNOON, PART_MORNING, PORTAL_TZ, WINDOW_AFTER
 
 SCHEDULE_MARKER = 'id="tblvvs"'
 LOGIN_FORM_MARKER = 'name="password"'
@@ -159,9 +159,21 @@ def parse_schedule(html: str) -> list[Ride]:
     return rides
 
 
-def next_ride(rides: list[Ride], part: str, today: date) -> Ride | None:
-    """First ride of the given part (morning/afternoon) today or later."""
+def ride_end(ride: Ride) -> datetime:
+    """Moment after which a ride counts as done."""
+    end = ride.arrival or ride.pickup
+    if end is None:
+        return datetime.combine(ride.date + timedelta(days=1), time.min, PORTAL_TZ)
+    return end + WINDOW_AFTER
+
+
+def next_ride(rides: list[Ride], part: str, now: datetime) -> Ride | None:
+    """Current or next ride of the given part (morning/afternoon).
+
+    A ride stays current until 15 minutes after its arrival time, then the
+    next one takes over.
+    """
     for ride in rides:
-        if ride.part == part and ride.date >= today:
+        if ride.part == part and ride_end(ride) > now:
             return ride
     return None

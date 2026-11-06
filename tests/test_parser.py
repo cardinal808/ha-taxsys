@@ -29,9 +29,15 @@ def test_parse_rides(rides) -> None:
 
 
 def test_next_ride(rides) -> None:
-    assert next_ride(rides, "ochtend", date(2026, 11, 9)) is rides[0]
-    assert next_ride(rides, "ochtend", date(2026, 11, 10)) is rides[2]
-    assert next_ride(rides, "middag", date(2026, 11, 10)) is None
+    at = lambda d, h, m: datetime(2026, 11, d, h, m, tzinfo=PORTAL_TZ)  # noqa: E731
+    # Before and during the Monday morning ride: Monday.
+    assert next_ride(rides, "ochtend", at(9, 6, 0)) is rides[0]
+    assert next_ride(rides, "ochtend", at(9, 8, 45)) is rides[0]
+    # 15 min after arrival it moves on to Tuesday.
+    assert next_ride(rides, "ochtend", at(9, 8, 51)) is rides[2]
+    # Monday afternoon ride is current until 15:03, then there is none left.
+    assert next_ride(rides, "middag", at(9, 15, 0)) is rides[1]
+    assert next_ride(rides, "middag", at(9, 20, 13)) is None
 
 
 @pytest.mark.parametrize(

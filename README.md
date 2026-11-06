@@ -53,14 +53,26 @@ Per kind maakt de integratie een apparaat *Taxsys &lt;klantnummer&gt;* met:
 
 | Entiteit (Engels / Nederlands HA) | Inhoud |
 |---|---|
-| `sensor.taxsys_<klantnr>_pickup` / `_ophalen` | O-tijd (ophaaltijd) van de ochtendrit van vandaag of de eerstvolgende schooldag |
-| `sensor.taxsys_<klantnr>_home_arrival` / `_thuisbrengen` | A-tijd (aankomst thuis) van de eerstvolgende middagrit |
+| `sensor.taxsys_<klantnr>_pickup` / `_ophalen` | O-tijd (ophaaltijd) van de huidige of eerstvolgende ochtendrit. Schuift 15 min na aankomst door naar de volgende |
+| `sensor.taxsys_<klantnr>_home_arrival` / `_thuisbrengen` | A-tijd (aankomst thuis) van de huidige of eerstvolgende middagrit |
 | `sensor.taxsys_<klantnr>_rides` / `_ritten` | Aantal ritten op het schema, met de hele lijst in het attribuut `rides` |
+| `calendar.taxsys_<klantnr>_schedule` / `_planning` | Alle ritten uit het vervoerschema als afspraken, met status, chauffeur en adressen in de omschrijving |
 | `binary_sensor.taxsys_<klantnr>_ride_window` / `_rit_venster` | Aan vanaf 45 min vóór de ophaaltijd tot 15 min na aankomst van een rit. Handig als zichtbaarheidsvoorwaarde voor een dashboardkaart |
 
 De entity-id's hangen af van de taal van je Home Assistant toen je de integratie toevoegde.
 
 De ritsensoren hebben de attributen `date`, `day`, `pickup_time`, `arrival_time`, `origin`, `destination`, `status`, `route`, `driver`, `live_location` en `live_time`. De live-locatie staat er alleen als het portaal die toont tijdens een rit.
+
+## Planning
+
+De kalender `calendar.taxsys_<klantnr>_planning` staat ook in de agenda van Home Assistant (zijbalk → Agenda). Op een dashboard toon je hem met de ingebouwde kalenderkaart, zie [`dashboard/taxsys_planning_card.yaml`](dashboard/taxsys_planning_card.yaml):
+
+```yaml
+type: calendar
+initial_view: listWeek
+entities:
+  - calendar.taxsys_0000000_planning
+```
 
 ## Hoe vaak wordt er ververst?
 

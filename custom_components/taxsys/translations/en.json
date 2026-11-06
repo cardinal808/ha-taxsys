@@ -57,6 +57,11 @@
       "ride_window": {
         "name": "Ride window"
       }
+    },
+    "calendar": {
+      "schedule": {
+        "name": "Schedule"
+      }
     }
   },
   "exceptions": {
