@@ -1,0 +1,25 @@
+# Mushroom template card (HACS) – Taxi
+# Pas de entity-id's aan als jouw Home Assistant in het Nederlands staat
+# (dan heten ze bijv. sensor.taxsys_0000000_ophalen). Zie README.
+# Alleen zichtbaar als het ritvenster aan staat.
+type: custom:mushroom-template-card
+entity: sensor.taxsys_0000000_rides
+icon: mdi:taxi
+icon_color: >
+  {% set rit = 'sensor.taxsys_0000000_pickup' if now().hour < 12 else 'sensor.taxsys_0000000_home_arrival' %}
+  {{ 'green' if state_attr(rit, 'status') == 'Aanwezig' else 'orange' }}
+primary: Taxi
+secondary: >
+  {% set o = state_attr('sensor.taxsys_0000000_pickup', 'pickup_time') %}
+  {% set b = state_attr('sensor.taxsys_0000000_home_arrival', 'arrival_time') %}
+  {% set rit = 'sensor.taxsys_0000000_pickup' if now().hour < 12 else 'sensor.taxsys_0000000_home_arrival' %}
+  {% set c = state_attr(rit, 'driver') or '' %}
+  {% set naam = (c.split(' - ')[1:] | join(' - ')) if ' - ' in c else c %}
+  Ophalen {{ o or '–' }} · Thuis {{ b or '–' }}{{ ' · ' ~ (naam | title) if naam }}
+multiline_secondary: true
+tap_action:
+  action: more-info
+visibility:
+  - condition: state
+    entity: binary_sensor.taxsys_0000000_ride_window
+    state: "on"

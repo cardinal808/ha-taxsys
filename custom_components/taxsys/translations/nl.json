@@ -1,0 +1,70 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Taxsys",
+        "description": "Log in op het Taxsys ouderportaal van het leerlingenvervoer.",
+        "data": {
+          "company": "Bedrijfscode",
+          "client_number": "Klantnummer (klantNr)",
+          "username": "Gebruikersnaam",
+          "password": "Wachtwoord"
+        },
+        "data_description": {
+          "company": "Bedrijfscode uit de inlog-URL van je vervoerder, bijv. G-XXX in ...?page=login&company=G-XXX",
+          "client_number": "klantNr uit de URL van de pagina met het vervoerschema (na inloggen)",
+          "username": "Gebruikersnaam of e-mail voor het Taxsys ouderportaal",
+          "password": "Wachtwoord voor het Taxsys ouderportaal"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Opnieuw inloggen",
+        "description": "Inloggen bij Taxsys lukt niet meer. Vul je huidige gegevens in.",
+        "data": {
+          "username": "Gebruikersnaam",
+          "password": "Wachtwoord"
+        },
+        "data_description": {
+          "username": "Gebruikersnaam of e-mail voor het Taxsys ouderportaal",
+          "password": "Wachtwoord voor het Taxsys ouderportaal"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Inloggen mislukt. Controleer gebruikersnaam en wachtwoord.",
+      "cannot_connect": "Het Taxsys portaal is niet bereikbaar.",
+      "schedule_not_found": "Ingelogd, maar geen vervoerschema gevonden. Controleer bedrijfscode en klantnummer.",
+      "unknown": "Onverwachte fout, zie het logboek."
+    },
+    "abort": {
+      "already_configured": "Deze deelnemer is al ingesteld.",
+      "reauth_successful": "Inloggegevens bijgewerkt."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "pickup": {
+        "name": "Ophalen"
+      },
+      "home_arrival": {
+        "name": "Thuisbrengen"
+      },
+      "rides": {
+        "name": "Ritten"
+      }
+    },
+    "binary_sensor": {
+      "ride_window": {
+        "name": "Rit venster"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "Inloggen bij Taxsys mislukt."
+    },
+    "update_failed": {
+      "message": "Vervoerschema van Taxsys niet bijgewerkt: {error}"
+    }
+  }
+}

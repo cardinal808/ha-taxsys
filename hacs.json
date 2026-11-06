@@ -1,0 +1,6 @@
+{
+  "name": "Taxsys leerlingenvervoer",
+  "country": "NL",
+  "homeassistant": "2025.2.0",
+  "render_readme": true
+}
