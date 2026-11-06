@@ -1,6 +1,10 @@
 {
   "domain": "taxsys",
   "name": "Taxsys leerlingenvervoer",
+  "categories": [
+    "vehicles_transport.public_transport",
+    "local_services"
+  ],
   "codeowners": [
     "@cardinal808"
   ],

@@ -1,11 +1,11 @@
 # Taxsys leerlingenvervoer voor Home Assistant
 
-[![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/)
+[![Open in de Marketplace](https://img.shields.io/badge/Home%20Assistant-Marketplace-41BDF5.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=cardinal808&repository=ha-taxsys&category=integration)
 [![Validate](https://github.com/cardinal808/ha-taxsys/actions/workflows/validate.yml/badge.svg)](https://github.com/cardinal808/ha-taxsys/actions/workflows/validate.yml)
 
 Custom integration die de ophaal- en brengtijden van het leerlingenvervoer (groepsvervoer) uit het **Taxsys ouderportaal** haalt en als sensoren in Home Assistant zet. Instellen gaat via de gebruikersinterface; je hoeft geen YAML of `secrets.yaml` aan te passen.
 
-*English: Home Assistant integration for the Dutch Taxsys school-transport parent portal. It reads the pickup and drop-off times of your child's taxi.*
+*English: Home Assistant integration for the Dutch Taxsys school-transport parent portal. It reads the pickup and drop-off times of your child's taxi. Install it from Settings → Marketplace.*
 
 Taxsys heeft geen publieke API. De integratie logt in op het ouderportaal (`account.taxsys.nl`) zoals een browser dat doet en leest de tabel *Vervoerschema* uit.
 
@@ -13,11 +13,21 @@ Taxsys heeft geen publieke API. De integratie logt in op het ouderportaal (`acco
 
 ## Installatie
 
-### Via HACS (aanbevolen)
+### Via de Marketplace (Home Assistant 2026.11 en nieuwer, aanbevolen)
 
-1. Open HACS → menu (⋮) → **Aangepaste repositories**.
-2. Voeg `https://github.com/cardinal808/ha-taxsys` toe met type **Integratie**.
-3. Zoek *Taxsys leerlingenvervoer*, download en herstart Home Assistant.
+**[Open deze integratie in je Marketplace](https://my.home-assistant.io/redirect/marketplace_repository/?owner=cardinal808&repository=ha-taxsys&category=integration)**
+
+Klik op de link hierboven, of:
+
+1. Ga naar **Instellingen → Marketplace** en zoek *Taxsys leerlingenvervoer*.
+2. Staat hij er (nog) niet tussen? Voeg via het menu (⋮) de repository `https://github.com/cardinal808/ha-taxsys` toe als **Integratie**.
+3. Installeer en herstart Home Assistant via de melding die de Marketplace geeft.
+
+Updates verschijnen daarna gewoon onder **Instellingen → Updates**.
+
+### Via HACS (Home Assistant ouder dan 2026.11)
+
+Voeg in HACS `https://github.com/cardinal808/ha-taxsys` toe als aangepaste repository van het type **Integratie**, download en herstart. Na de update naar 2026.11 neemt de Marketplace dit automatisch over.
 
 ### Handmatig
 
